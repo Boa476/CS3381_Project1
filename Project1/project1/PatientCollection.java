@@ -16,15 +16,19 @@ public class PatientCollection {
 		Scanner sc = null;
 		
 		try {
-			sc = new Scanner(new File("data.csv"));
+			sc = new Scanner(new File("./project1/data.csv"));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		while (sc.hasNextLine()) {
-			String[] Tokens = sc.nextLine().split(",");	
-			Patient temp = new Patient()
+			String[] tokens = sc.nextLine().split(",");	
+			ArrayList<Double> proteins = new ArrayList<Double>();
+			for (int i = 3; i < tokens.length; i++) {
+				proteins.add(Double.parseDouble(tokens[i]));
+			}
+			Patient temp = new Patient(tokens[2], tokens[1], tokens[0], proteins);
 		}
 	}
 }
