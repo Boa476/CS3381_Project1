@@ -21,6 +21,13 @@ public class Patient {
 		genes = g;
 	}
 	
+	public Patient(String i, ArrayList<Double> g) {
+		id = i;
+		pred = "unknown";
+		result = "N/A";
+		genes = g;
+	}
+	
 	public String getId() {
 		return id;
 	}
@@ -54,7 +61,14 @@ public class Patient {
 	}
 	
 	public String toString() {
-		return "id: " + id + " prediction: " + pred + " result: " + result;
+		return id + " " + pred + " " + result;
+	}
+	
+	public boolean equals(Patient rhs) {
+		if(Integer.parseInt(id) == Integer.parseInt(rhs.getId())) {
+			return true;
+		}
+		return false;
 	}
 
 
