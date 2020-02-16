@@ -1,6 +1,7 @@
 package project1;
 
 import java.io.File;
+import 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -33,6 +34,20 @@ public class PatientCollection {
 			}
 			list.add(new Patient(tokens[2], tokens[1], tokens[0], proteins));
 		}
+	}
+	
+	public void writeFile(String fileName)
+	{
+		try {
+		      File myObj = new File(fileName);
+		      if (myObj.createNewFile()) {
+		        System.out.println("File created: " + myObj.getName());
+		      } else {
+		        System.out.println("File already exists.");
+		      }
+		    } catch (IOException e) {
+		      System.out.println("An error occurred.");
+		      e.printStackTrace();
 	}
 	
 	public Patient getPatient(String id) {
@@ -83,6 +98,7 @@ public class PatientCollection {
 	 
 	 public String addPatientsFromFile (String fileName) {
 		 String str = "All patients successfully added to file";
+		 Predictor pred = new Predictor();
 		 int ctr = 0;
 		 ArrayList<Integer> err = new ArrayList<Integer>();
 		 
@@ -102,11 +118,16 @@ public class PatientCollection {
 				Patient p = new Patient(tokens[0], proteins);
 				ctr++;
 				
-				if (list.contains(p) || proteins.size() != 4776) {
+//				System.out.println(proteins.size()); // validation for patient meeting criteria for filing
+//				System.out.println(contains(p)); // validation for patient meeting criteria for filing
+				
+				if (contains(p) || proteins.size() != 4776) {
 					err.add(ctr);
-					str = "Error adding patient on line: " + err.toString() + "\n Please validate the formatting of the data file \n i.e. id,protein1, ... protein4776";
+					str = "Error adding patient on line: " + err.toString() + "\nPlease validate the formatting of the data file\ni.e. id,protein1, ... protein4776";
 				}
 				else {
+					String x = pred.Predict(p.getGenes().get(3696).doubleValue(), p.getGenes().get(3257).doubleValue());
+					p.setPred(x);
 					list.add(p);
 				}
 			}
