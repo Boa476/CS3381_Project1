@@ -26,10 +26,15 @@ public class Tester {
 		
 		System.out.println(s1);
 		
-		s1.addPatientsFromFile("./project1/newdata.csv");
+		s1.addPatientsFromFile("./project1/newdata.csv"); // problems with error detection
 		String msg = s1.addPatientsFromFile("./project1/newdata.csv");
 		System.out.println(msg);
 		System.out.println(s1);
+		//
+		
+		//PatientCollection.writeFile Test
+		s1.writeFile("./project1/data.csv");
+		//
 	}
 
 }

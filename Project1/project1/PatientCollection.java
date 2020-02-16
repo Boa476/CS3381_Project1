@@ -1,8 +1,9 @@
 package project1;
 
 import java.io.File;
-import 
+import java.io.IOException;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
@@ -38,16 +39,28 @@ public class PatientCollection {
 	
 	public void writeFile(String fileName)
 	{
-		try {
-		      File myObj = new File(fileName);
-		      if (myObj.createNewFile()) {
-		        System.out.println("File created: " + myObj.getName());
-		      } else {
-		        System.out.println("File already exists.");
+		i = list.iterator();
+		
+		//writeFile file creation and writer sourced from https://www.w3schools.com/java/java_files_create.asp
+		
+		 try {
+		      FileWriter myWriter = new FileWriter(fileName);
+		      String str = new String();
+		      while (i.hasNext()) {
+		    	  Patient temp = i.next();
+		    	  str = str + temp.getId() + "," + temp.getPred() + "," + temp.getResult();
+		    	  for(int k = 0; k < temp.getGenes().size(); k++) {
+		    		  str = str + "," + temp.getGenes().get(k);
+		    	  }
+		    	  str = str + "\n";
+		    	  System.out.println(str);
 		      }
+		      myWriter.write(str);
+		      myWriter.close();
 		    } catch (IOException e) {
 		      System.out.println("An error occurred.");
 		      e.printStackTrace();
+		    }
 	}
 	
 	public Patient getPatient(String id) {
