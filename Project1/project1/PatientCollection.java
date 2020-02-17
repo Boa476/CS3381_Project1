@@ -45,7 +45,7 @@ public class PatientCollection {
 		
 		 try {
 		      FileWriter myWriter = new FileWriter(fileName);
-		      String str = new String();
+		      String str = new String("");
 		      while (i.hasNext()) {
 		    	  Patient temp = i.next();
 		    	  str = str + temp.getId() + "," + temp.getPred() + "," + temp.getResult();
@@ -53,9 +53,9 @@ public class PatientCollection {
 		    		  str = str + "," + temp.getGenes().get(k);
 		    	  }
 		    	  str = str + "\n";
-		    	  System.out.println(str);
 		      }
 		      myWriter.write(str);
+		      System.out.println("File written successfully.");
 		      myWriter.close();
 		    } catch (IOException e) {
 		      System.out.println("An error occurred.");
@@ -145,7 +145,7 @@ public class PatientCollection {
 				}
 			}
 		 
-		return str;
+		 return str;
 	 }
 	 
 	 public boolean contains(Patient p) {
