@@ -1,3 +1,4 @@
+//Taylor Boling, CSCI 3381 OO with Java
 package project1;
 
 public class Predictor {

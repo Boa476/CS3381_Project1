@@ -1,3 +1,4 @@
+//Taylor Boling, CSCI 3381 OO with Java
 package project1;
 
 public class Tester {
@@ -33,7 +34,7 @@ public class Tester {
 		//
 		
 		//PatientCollection.writeFile Test
-		s1.writeFile("./project1/data.csv");
+		s1.writeFile();
 		//
 	}
 

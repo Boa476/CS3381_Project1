@@ -1,12 +1,18 @@
+//Taylor Boling, CSCI 3381 OO with Java
 package project1;
 
 import java.io.File;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
+
+
 
 public class PatientCollection { //Creates a "roster" of patients
 	private ArrayList<Patient> list;
@@ -19,50 +25,90 @@ public class PatientCollection { //Creates a "roster" of patients
 	}
 
 	// Reads from pre-existing data file and adds patients to ArrayList
-	private void readfile() {
-		
+	private void readfile() { //sourced from CSCI 3381 BlackBoard
+		BufferedReader lineReader = null;
 		try {
-			sc = new Scanner(new File("./project1/data.csv"));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		while (sc.hasNextLine()) {
-			String[] tokens = sc.nextLine().split(",");	
-			ArrayList<Double> proteins = new ArrayList<Double>();
-			for (int i = 3; i < tokens.length; i++) {
-				proteins.add(Double.parseDouble(tokens[i]));
-			}
-			list.add(new Patient(tokens[2], tokens[1], tokens[0], proteins));
+			FileReader fr = new FileReader("./project1/data.csv");
+			lineReader = new BufferedReader(fr);
+			String line = null;
+			while ((line = lineReader.readLine())!=null) {
+					String tokens[] =line.split(",");
+					ArrayList<Double> proteins = new ArrayList<Double>();
+					for (int i = 3; i < tokens.length; i++) {
+						proteins.add(Double.parseDouble(tokens[i]));
+					}
+					list.add(new Patient(tokens[2], tokens[1], tokens[0], proteins));
+				}
+		} catch (Exception e) {
+			System.err.println("there was a problem with the file reader, try different read type.");
+//			try {
+//				lineReader = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream(fileName.substring(1))));
+//				String line = null;
+//				while ((line = lineReader.readLine())!=null) {
+//					String name = lineReader.readLine();
+//					String id = lineReader.readLine();
+//					if (line.equals("student")) {
+//						String gpaString = lineReader.readLine();
+//						addStudent(new Student(name,id,Double.parseDouble(gpaString)));
+//					}
+//					else if (line.equals("instructor")) {
+//						String email = lineReader.readLine();
+//						addInstructor(new Instructor(name,id,email));
+//					}
+//					else {
+//						System.err.println("error: unnknown person type");
+//					}				}
+//			} catch (Exception e2) {
+//				System.err.println("there was a problem with the file reader, try again.  either no such file or format error");
+//			} finally {
+//				if (lineReader != null)
+//					try {
+//						lineReader.close();
+//					} catch (IOException e2) {
+//						System.err.println("could not close BufferedReader");
+//					}
+//			}			
+		} finally {
+			if (lineReader != null)
+				try {
+					lineReader.close();
+				} catch (IOException e) {
+					System.err.println("could not close BufferedReader");
+				}
 		}
 	}
 	
-	public void writeFile(String fileName) //writes arraylist of patients to a file of the given directory
+	public void writeFile() //writes arraylist of patients to a file of the given directory (Sourced from CSCI 3381 BlackBoard)
 	{
 		i = list.iterator();
 		
-		//writeFile file creation and writer sourced from https://www.w3schools.com/java/java_files_create.asp
-		
-		 try {
-		      FileWriter myWriter = new FileWriter(fileName);
-		      String str = new String("");
-		      while (i.hasNext()) {
+
+
+		// this method writes all of the data in the persons array to a file
+		try
+		{
+
+			FileWriter fw = new FileWriter("./project1.data.csv");
+			BufferedWriter myOutfile = new BufferedWriter(fw);
+			 while (i.hasNext()) {
+				 String str = new String();
 		    	  Patient temp = i.next();
-		    	  str = str + temp.getId() + "," + temp.getPred() + "," + temp.getResult();
+		    	  str = temp.getId() + "," + temp.getPred() + "," + temp.getResult();
 		    	  for(int k = 0; k < temp.getGenes().size(); k++) {
 		    		  str = str + "," + temp.getGenes().get(k);
 		    	  }
-		    	  str = str + "\n";
+		    	  myOutfile.write(str + "\n");
 		      }
-		      myWriter.write(str);
-		      System.out.println("File written successfully.");
-		      myWriter.close();
-		    } catch (IOException e) {
-		      System.out.println("An error occurred.");
-		      e.printStackTrace();
-		    }
-	}
+
+			myOutfile.flush();
+			myOutfile.close();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Didn't save to ./project1.data.csv" );
+		}
+	}	
+
 	
 	public Patient getPatient(String id) { // returns a patient with the given id
 		i = list.iterator();
