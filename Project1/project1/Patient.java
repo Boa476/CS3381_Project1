@@ -2,7 +2,7 @@ package project1;
 
 import java.util.ArrayList;
 
-public class Patient {
+public class Patient { //object for storing patient information
 	private String id = new String();
 	private String pred = new String();
 	private String result = new String();

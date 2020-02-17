@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
 
-public class PatientCollection {
+public class PatientCollection { //Creates a "roster" of patients
 	private ArrayList<Patient> list;
 	Iterator<Patient> i;
 	Scanner sc = null;
@@ -18,6 +18,7 @@ public class PatientCollection {
 		readfile();
 	}
 
+	// Reads from pre-existing data file and adds patients to ArrayList
 	private void readfile() {
 		
 		try {
@@ -37,7 +38,7 @@ public class PatientCollection {
 		}
 	}
 	
-	public void writeFile(String fileName)
+	public void writeFile(String fileName) //writes arraylist of patients to a file of the given directory
 	{
 		i = list.iterator();
 		
@@ -63,11 +64,11 @@ public class PatientCollection {
 		    }
 	}
 	
-	public Patient getPatient(String id) {
+	public Patient getPatient(String id) { // returns a patient with the given id
 		i = list.iterator();
 		while(i.hasNext()) {
 			int temp = list.indexOf(i.next());
-			if(list.get(temp).getId() == id) {
+			if(list.get(temp).getId().equals(id)) {
 				return list.get(temp);
 			}
 		}
@@ -76,10 +77,10 @@ public class PatientCollection {
 		return null;
 	}
 	
-	public Patient removePatient(String id) {
+	public Patient removePatient(String id) { // removes a patient from the array with the given id
 		while(i.hasNext()) {
 			int temp = list.indexOf(i.next());
-			if(list.get(temp).getId() == id) {
+			if(list.get(temp).getId().equals(id)) {
 				Patient p1 = list.get(temp); 
 				list.remove(temp);
 				return p1;
@@ -90,16 +91,16 @@ public class PatientCollection {
 		return null;
 	}
 	
-	 public void setResultForPatient (String id, String result) {
+	 public void setResultForPatient (String id, String result) {  // Set the result field for the patient with given id.
 		 while(i.hasNext()) {
 				int temp = list.indexOf(i.next());
-				if(list.get(temp).getId() == id) { 
+				if(list.get(temp).getId().equals(id)) { 
 					list.get(temp).setResult(result);
 				}
 		 }
 	 }
 	 
-	 public ArrayList<String> getIds(){
+	 public ArrayList<String> getIds(){ // Return an ArrayList with all of the collection's patient ids
 		 i = list.iterator();
 		 ArrayList<String> ids = new ArrayList<String>();
 		 while(i.hasNext()) {
@@ -109,7 +110,7 @@ public class PatientCollection {
 		 return ids;
 	 }
 	 
-	 public String addPatientsFromFile (String fileName) {
+	 public String addPatientsFromFile (String fileName) { //adds patients to the arraylist and makes a prediction based on proteins
 		 String str = "All patients successfully added to file";
 		 Predictor pred = new Predictor();
 		 int ctr = 0;
@@ -148,7 +149,7 @@ public class PatientCollection {
 		 return str;
 	 }
 	 
-	 public boolean contains(Patient p) {
+	 public boolean contains(Patient p) { // check to see if patient p is within the list
 		 i = list.iterator();
 		 while(i.hasNext()) {
 			if (p.equals(i.next())) {
@@ -158,7 +159,7 @@ public class PatientCollection {
 		return false;
 	 }
 	 
-	 public String toString() {
+	 public String toString() { // Return a String representation of the collection.
 		 String str = "";
 		 i = list.iterator();
 		 if(list.isEmpty()) {
